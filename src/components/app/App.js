@@ -1,19 +1,28 @@
-import React from 'react';
-import T from 'prop-types';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { useState } from 'react'
+import T from 'prop-types'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
-import { AdvertPage, AdvertsPage, NewAdvertPage } from '../adverts';
-import { LoginPage, PrivateRoute } from '../auth';
-import { AuthProvider } from '../auth/context';
-import NotFoundPage from './NotFoundPage';
+import { AdvertPage, AdvertsPage, NewAdvertPage } from '../adverts'
+import { LoginPage, PrivateRoute } from '../auth'
+import { AuthProvider } from '../auth/context'
+import NotFoundPage from './NotFoundPage'
+import generateStore from '../../store'
+import { userLogin, userLogout } from '../../store/actions'
+
+const store = generateStore()
+
+const showMe = () => console.log(store.getState())
+store.subscribe(showMe)
+store.dispatch(userLogin())
+store.dispatch(userLogout())
 
 function App({ isInitiallyLogged }) {
-  const [isLogged, setIsLogged] = React.useState(isInitiallyLogged);
+  const [isLogged, setIsLogged] = useState(isInitiallyLogged)
 
-  const handleLogin = () => setIsLogged(true);
-  const handleLogout = () => setIsLogged(false);
+  const handleLogin = () => setIsLogged(true)
+  const handleLogout = () => setIsLogged(false)
 
-  const authProps = { isLogged, handleLogin, handleLogout };
+  const authProps = { isLogged, handleLogin, handleLogout }
 
   return (
     <AuthProvider {...authProps}>
@@ -35,15 +44,15 @@ function App({ isInitiallyLogged }) {
         <Redirect to="/404" />
       </Switch>
     </AuthProvider>
-  );
+  )
 }
 
 App.propTypes = {
   isInitiallyLogged: T.bool,
-};
+}
 
 App.defaultProps = {
   isInitiallyLogged: false,
-};
+}
 
-export default App;
+export default App
