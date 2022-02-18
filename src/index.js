@@ -11,13 +11,12 @@ import generateStore from './store'
 const accessToken = storage.get('auth')
 configureClient({ accessToken })
 
-const store = generateStore()
-console.log(store.getState())
+const store = generateStore({ userAuth: !!accessToken })
 
 ReactDOM.render(
   <React.StrictMode>
     <Providers store={store}>
-      <App isInitiallyLogged={!!accessToken} />
+      <App />
     </Providers>
   </React.StrictMode>,
   document.getElementById('root')

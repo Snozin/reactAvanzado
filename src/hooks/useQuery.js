@@ -1,39 +1,39 @@
-import React from 'react';
+import { useState, useEffect } from 'react'
 
 function useQuery(query) {
-  const [data, setData] = React.useState(undefined);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
+  const [data, setData] = useState(undefined)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const startExecution = () => {
-      setError(null);
-      setIsLoading(true);
-    };
+      setError(null)
+      setIsLoading(true)
+    }
     const finishExecution = (error, data) => {
-      setIsLoading(false);
+      setIsLoading(false)
       if (error) {
-        return setError(error);
+        return setError(error)
       }
-      setData(data);
-    };
+      setData(data)
+    }
     const execute = async () => {
-      startExecution();
+      startExecution()
       try {
-        const result = await query();
-        finishExecution(null, result);
+        const result = await query()
+        finishExecution(null, result)
       } catch (error) {
-        finishExecution(error);
+        finishExecution(error)
       }
-    };
-    execute();
-  }, [query]);
+    }
+    execute()
+  }, [query])
 
   return {
     isLoading,
     error,
     data,
-  };
+  }
 }
 
-export default useQuery;
+export default useQuery
