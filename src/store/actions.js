@@ -1,4 +1,3 @@
-import { login } from '../components/auth/service'
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
@@ -26,10 +25,10 @@ export function userLoginFail(error) {
 }
 
 export function userLogin(credentials, history, location) {
-  return async function (dispatch, getState) {
+  return async function (dispatch, getState, { API }) {
     dispatch(userLoginRequest())
     try {
-      await login(credentials)
+      await API.authService.login(credentials)
       dispatch(userLoginSuccess())
       const { from } = location.state || { from: { pathname: '/' } }
       history.replace(from)
