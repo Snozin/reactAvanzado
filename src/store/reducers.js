@@ -1,5 +1,11 @@
 // import { combineReducers } from 'redux'
-import { ADS_LOADED, USER_LOGIN, USER_LOGOUT } from './types'
+import {
+  ADS_LOADED,
+  USER_LOGIN_FAIL,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_REQUEST,
+  USER_LOGOUT,
+} from './types'
 
 // TODO Eliminar comentarios y limpiar
 
@@ -7,6 +13,10 @@ import { ADS_LOADED, USER_LOGIN, USER_LOGOUT } from './types'
 const defaultState = {
   userAuth: false,
   adverts: [],
+  ui: {
+    isLoading: false,
+    error: null,
+  },
 }
 
 /**
@@ -37,7 +47,7 @@ export function userAuth(state = defaultState.userAuth, action) {
   // Dentro de este mini reducer el estado que se recibe es solo el valor de la
   // propiedad userAuth del estado global.
   switch (action.type) {
-    case USER_LOGIN:
+    case USER_LOGIN_SUCCESS:
       return true
     case USER_LOGOUT:
       return false
@@ -51,6 +61,19 @@ export function adverts(state = defaultState.adverts, action) {
   switch (action.type) {
     case ADS_LOADED:
       return action.payload
+    default:
+      return state
+  }
+}
+
+export function ui(state = defaultState.ui, action) {
+  switch (action.type) {
+    case USER_LOGIN_REQUEST:
+      return { isLoading: true, error: null }
+    case USER_LOGIN_SUCCESS:
+      return { isLoading: false, error: null }
+    case USER_LOGIN_FAIL:
+      return { isLoading: false, error: action.payload }
     default:
       return state
   }

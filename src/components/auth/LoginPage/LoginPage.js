@@ -5,7 +5,7 @@ import { login } from '../service'
 import LoginForm from './LoginForm'
 import useMutation from '../../../hooks/useMutation'
 import { useDispatch } from 'react-redux'
-import { userLogin } from '../../../store/actions'
+import { userLoginSuccess } from '../../../store/actions'
 
 function LoginPage({ location, history }) {
   const { isLoading, error, execute, resetError } = useMutation(login)
@@ -13,7 +13,7 @@ function LoginPage({ location, history }) {
 
   const handleSubmit = (credentials) => {
     execute(credentials)
-      .then(dispatch(userLogin()))
+      .then(dispatch(userLoginSuccess()))
       .then(() => {
         const { from } = location.state || { from: { pathname: '/' } }
         history.replace(from)

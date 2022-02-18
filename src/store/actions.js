@@ -1,8 +1,26 @@
-import { USER_LOGIN, USER_LOGOUT, ADS_LOADED } from './types'
+import {
+  USER_LOGIN_FAIL,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
+  ADS_LOADED,
+} from './types'
 
-export function userLogin() {
+export function userLoginRequest() {
   return {
-    type: USER_LOGIN,
+    type: USER_LOGIN_REQUEST,
+  }
+}
+export function userLoginSuccess() {
+  return {
+    type: USER_LOGIN_SUCCESS,
+  }
+}
+export function userLoginFail(error) {
+  return {
+    type: USER_LOGIN_FAIL,
+    error: true,
+    payload: error,
   }
 }
 
