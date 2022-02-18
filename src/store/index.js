@@ -15,6 +15,17 @@ function logger(store) {
   }
 }
 
+function thunk(store) {
+  return function (next) {
+    return function (action) {
+      if (typeof action === 'function') {
+        return action(store.dispatch, store.getState)
+      }
+      return next(action)
+    }
+  }
+}
+
 // Se devuelve una función en lugar del propio store para poder configurar
 // desde fuera otros parámetros que necesitaremos más adelante
 const generateStore = (preloadState) => {
@@ -23,7 +34,7 @@ const generateStore = (preloadState) => {
   const store = createStore(
     mainReducer,
     preloadState,
-    composeWithDevTools(applyMiddleware(logger))
+    composeWithDevTools(applyMiddleware(thunk, logger))
   )
   return store
 }

@@ -1,34 +1,24 @@
 import React from 'react'
 import T from 'prop-types'
 
-import { login } from '../service'
 import LoginForm from './LoginForm'
-import useMutation from '../../../hooks/useMutation'
-import { useDispatch } from 'react-redux'
-import { userLoginSuccess } from '../../../store/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { userLogin } from '../../../store/actions'
+import { getUIState } from '../../../store/selectors'
 
 function LoginPage({ location, history }) {
-  const { isLoading, error, execute, resetError } = useMutation(login)
   const dispatch = useDispatch()
+  const { isLoading, error } = useSelector(getUIState)
 
   const handleSubmit = (credentials) => {
-    execute(credentials)
-      .then(dispatch(userLoginSuccess()))
-      .then(() => {
-        const { from } = location.state || { from: { pathname: '/' } }
-        history.replace(from)
-      })
+    dispatch(userLogin(credentials, history, location))
   }
 
   return (
     <div>
       <LoginForm onSubmit={handleSubmit} />
       {isLoading && <p>...login in nodepop</p>}
-      {error && (
-        <div onClick={resetError} style={{ color: 'red' }}>
-          {error.message}
-        </div>
-      )}
+      {error && <div style={{ color: 'red' }}>{error.message}</div>}
     </div>
   )
 }

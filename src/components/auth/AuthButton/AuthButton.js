@@ -6,10 +6,11 @@ import { logout } from '../service'
 import useMutation from '../../../hooks/useMutation'
 import { useSelector, useDispatch } from 'react-redux'
 import { userLogout } from '../../../store/actions'
+import { getLoginState } from '../../../store/selectors'
 
 const AuthButton = () => {
   const mutation = useMutation(logout)
-  const isLogged = useSelector((state) => state.userAuth)
+  const isLogged = useSelector(getLoginState)
   const dispatch = useDispatch()
 
   const handleLogoutConfirm = async () => {

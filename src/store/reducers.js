@@ -49,6 +49,8 @@ export function userAuth(state = defaultState.userAuth, action) {
   switch (action.type) {
     case USER_LOGIN_SUCCESS:
       return true
+    case USER_LOGIN_FAIL:
+      return false
     case USER_LOGOUT:
       return false
     default:

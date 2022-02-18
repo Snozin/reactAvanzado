@@ -1,3 +1,4 @@
+import { login } from '../components/auth/service'
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
@@ -21,6 +22,20 @@ export function userLoginFail(error) {
     type: USER_LOGIN_FAIL,
     error: true,
     payload: error,
+  }
+}
+
+export function userLogin(credentials, history, location) {
+  return async function (dispatch, getState) {
+    dispatch(userLoginRequest())
+    try {
+      await login(credentials)
+      dispatch(userLoginSuccess())
+      const { from } = location.state || { from: { pathname: '/' } }
+      history.replace(from)
+    } catch (error) {
+      dispatch(userLoginFail(error))
+    }
   }
 }
 
