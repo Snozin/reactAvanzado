@@ -9,6 +9,10 @@ export const ADS_LOAD_FAIL = 'ADS_LOAD_FAIL'
 
 export const ADS_GET_TAGS = 'ADS_GET_TAGS'
 
+export const AD_CREATE_SUCCESS = 'AD_CREATE_SUCCESS'
+export const AD_CREATE_ERROR = 'AD_CREATE_ERROR'
+// export const AD_CREATE_SUCCESS = 'AD_CREATE_SUCCESS'
+
 // export const AD_LOAD_REQUEST = 'AD_LOAD_REQUEST'
 // export const AD_LOAD_SUCCES = 'AD_LOAD_SUCCES'
 // export const AD_LOAD_FAIL = 'AD_LOAD_FAIL'

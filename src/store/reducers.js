@@ -9,6 +9,7 @@ import {
   ADS_LOAD_FAIL,
   UI_RESET_ERROR,
   ADS_GET_TAGS,
+  AD_CREATE_SUCCESS,
 } from './types'
 
 // TODO Eliminar comentarios y limpiar
@@ -19,6 +20,9 @@ const defaultState = {
   adverts: {
     data: [],
     tags: [],
+    newAd: {
+      id: 0,
+    },
   },
   ui: {
     isLoading: false,
@@ -74,6 +78,8 @@ export function adverts(state = defaultState.adverts, action) {
       return action.payload
     case ADS_GET_TAGS:
       return { ...state, tags: action.payload }
+    case AD_CREATE_SUCCESS:
+      return { ...state, newAd: { id: action.payload } }
     default:
       return state
   }

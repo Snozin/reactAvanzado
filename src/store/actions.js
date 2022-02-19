@@ -7,6 +7,7 @@ import {
   ADS_LOAD_REQUEST,
   ADS_LOAD_FAIL,
   ADS_GET_TAGS,
+  AD_CREATE_SUCCESS,
   UI_RESET_ERROR,
 } from './types'
 
@@ -41,7 +42,6 @@ export function userLogin(credentials, history, location) {
     }
   }
 }
-
 export function userLogout() {
   return {
     type: USER_LOGOUT,
@@ -67,7 +67,7 @@ export function advertsLoadFail(error) {
   }
 }
 
-export function advertsGetTags(data) {
+function advertsGetTags(data) {
   return {
     type: ADS_GET_TAGS,
     payload: data,
@@ -79,6 +79,24 @@ export function getTags() {
     try {
       const tags = await API.advertsService.getTags()
       dispatch(advertsGetTags(tags))
+    } catch (error) {
+      dispatch(advertsLoadFail(error))
+    }
+  }
+}
+
+export function advertCreateSuccess(id) {
+  return {
+    type: AD_CREATE_SUCCESS,
+    payload: id,
+  }
+}
+export function advertCreate(advert, history) {
+  return async function (dispatch, getState, { API }) {
+    try {
+      const newAdvert = await API.advertsService.createAdvert(advert)
+      dispatch(advertCreateSuccess(newAdvert.id))
+      history.push(`/adverts/${newAdvert.id}`)
     } catch (error) {
       dispatch(advertsLoadFail(error))
     }
