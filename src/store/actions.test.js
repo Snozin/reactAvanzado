@@ -75,14 +75,17 @@ describe('userLogin', () => {
     const error = 'Login Error'
     const API = {
       authService: {
-        login: jest.fn(),
+        // login: jest.fn(),
+        login() {
+          return Promise.reject(error)
+        },
       },
     }
     const dispatch = jest.fn()
     const getState = () => {}
 
     test('should dispatch an USER_LOGIN_FAIL action', async () => {
-      API.authService.login.mockRejectedValue(error)
+      // API.authService.login.mockRejectedValue(error)
       await action(dispatch, getState, { API })
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         type: USER_LOGIN_FAIL,
