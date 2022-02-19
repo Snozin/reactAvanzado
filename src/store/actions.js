@@ -6,7 +6,8 @@ import {
   ADS_LOAD_SUCCESS,
   ADS_LOAD_REQUEST,
   ADS_LOAD_FAIL,
-  UI_RESET_ERROR
+  ADS_GET_TAGS,
+  UI_RESET_ERROR,
 } from './types'
 
 export function userLoginRequest() {
@@ -66,6 +67,24 @@ export function advertsLoadFail(error) {
   }
 }
 
+export function advertsGetTags(data) {
+  return {
+    type: ADS_GET_TAGS,
+    payload: data,
+  }
+}
+
+export function getTags() {
+  return async function (dispatch, getState, { API }) {
+    try {
+      const tags = await API.advertsService.getTags()
+      dispatch(advertsGetTags(tags))
+    } catch (error) {
+      dispatch(advertsLoadFail(error))
+    }
+  }
+}
+
 export function advertsLoad() {
   return async function (dispatch, getState, { API }) {
     dispatch(advertsLoadRequest())
@@ -80,6 +99,6 @@ export function advertsLoad() {
 
 export function UIResetError() {
   return {
-    type: UI_RESET_ERROR
+    type: UI_RESET_ERROR,
   }
 }

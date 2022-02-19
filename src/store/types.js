@@ -7,4 +7,10 @@ export const ADS_LOAD_REQUEST = 'ADS_LOAD_REQUEST'
 export const ADS_LOAD_SUCCESS = 'ADS_LOAD_SUCCESS'
 export const ADS_LOAD_FAIL = 'ADS_LOAD_FAIL'
 
+export const ADS_GET_TAGS = 'ADS_GET_TAGS'
+
+// export const AD_LOAD_REQUEST = 'AD_LOAD_REQUEST'
+// export const AD_LOAD_SUCCES = 'AD_LOAD_SUCCES'
+// export const AD_LOAD_FAIL = 'AD_LOAD_FAIL'
+
 export const UI_RESET_ERROR = 'UI_RESET_ERROR'

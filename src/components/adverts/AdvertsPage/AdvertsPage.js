@@ -7,8 +7,6 @@ import FiltersForm from './FiltersForm'
 import AdvertsList from './AdvertsList'
 import EmptyList from './EmptyList'
 import storage from '../../../utils/storage'
-// import { getAdverts } from '../service'
-// import useQuery from '../../../hooks/useQuery'
 import { defaultFilters, filterAdverts } from './filters'
 import { useSelector, useDispatch } from 'react-redux'
 import { advertsLoad } from '../../../store/actions'
@@ -18,7 +16,6 @@ const getFilters = () => storage.get('filters') || defaultFilters
 const saveFilters = (filters) => storage.set('filters', filters)
 
 function AdvertsPage() {
-  // const { isLoading, error, data: adverts = [] } = useQuery(getAdverts)
   const dispatch = useDispatch()
   const adverts = useSelector(getAdverts)
   const error = useSelector(getUIState)
@@ -53,9 +50,6 @@ function AdvertsPage() {
         <AdvertsList adverts={filteredAdverts} />
       ) : (
         <>
-          {/**
-           * Aquí tendré que hacer magia
-           */}
           <EmptyList advertsCount={adverts.length} />
         </>
       )}

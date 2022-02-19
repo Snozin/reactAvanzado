@@ -8,6 +8,7 @@ import {
   ADS_LOAD_REQUEST,
   ADS_LOAD_FAIL,
   UI_RESET_ERROR,
+  ADS_GET_TAGS,
 } from './types'
 
 // TODO Eliminar comentarios y limpiar
@@ -15,7 +16,10 @@ import {
 // Estado inicial por defecto
 const defaultState = {
   userAuth: false,
-  adverts: [],
+  adverts: {
+    data: [],
+    tags: [],
+  },
   ui: {
     isLoading: false,
     error: null,
@@ -65,9 +69,11 @@ export function adverts(state = defaultState.adverts, action) {
   // Retornara un estado nuevo con la misma forma que el estado por defecto ADS
   switch (action.type) {
     case ADS_LOAD_SUCCESS:
+      return { ...state, data: action.payload }
+    case ADS_LOAD_FAIL:
       return action.payload
-    // case ADS_LOAD_FAIL:
-    //   return action.payload
+    case ADS_GET_TAGS:
+      return { ...state, tags: action.payload }
     default:
       return state
   }
