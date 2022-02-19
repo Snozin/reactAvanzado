@@ -2,19 +2,15 @@ import { Link } from 'react-router-dom'
 import T from 'prop-types'
 
 import { ConfirmationButton } from '../../common'
-import { logout } from '../service'
-import useMutation from '../../../hooks/useMutation'
 import { useSelector, useDispatch } from 'react-redux'
 import { userLogout } from '../../../store/actions'
 import { getLoginState } from '../../../store/selectors'
 
 const AuthButton = () => {
-  const mutation = useMutation(logout)
   const isLogged = useSelector(getLoginState)
   const dispatch = useDispatch()
 
   const handleLogoutConfirm = async () => {
-    await mutation.execute()
     dispatch(userLogout())
   }
 

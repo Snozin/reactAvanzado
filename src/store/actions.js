@@ -44,9 +44,19 @@ export function userLogin(credentials, history, location) {
     }
   }
 }
-export function userLogout() {
+export function userLogoutRequest() {
   return {
     type: USER_LOGOUT,
+  }
+}
+export function userLogout(){
+  return async function(dispatch, getState, {API}){
+    try {
+      await API.authService.logout() 
+      dispatch(userLogoutRequest())
+    }catch (error){
+      dispatch(userLoginFail(error))
+    }
   }
 }
 
