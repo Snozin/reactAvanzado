@@ -8,6 +8,8 @@ import {
   ADS_LOAD_FAIL,
   ADS_GET_TAGS,
   AD_CREATE_SUCCESS,
+  AD_DELETE_SUCCESS,
+  AD_GET_BY_ID,
   UI_RESET_ERROR,
 } from './types'
 
@@ -88,10 +90,21 @@ export function getTags() {
 export function advertCreateSuccess(id) {
   return {
     type: AD_CREATE_SUCCESS,
-    payload: id,
+    payload: id
   }
 }
-export function advertCreate(advert, history) {
+export function advertDeleteSuccess() {
+  return {
+    type: AD_DELETE_SUCCESS,
+  }
+}
+export function advertGetById(advert) {
+  return {
+    type: AD_GET_BY_ID,
+    payload: advert
+  }
+}
+export function createAdvert(advert, history) {
   return async function (dispatch, getState, { API }) {
     try {
       const newAdvert = await API.advertsService.createAdvert(advert)
@@ -102,8 +115,29 @@ export function advertCreate(advert, history) {
     }
   }
 }
+export function deleteAdvert(id, history) {
+  return async function (dispatch, getState, { API }) {
+    try {
+      await API.advertsService.deleteAdvert(id)
+      dispatch(advertDeleteSuccess())
+      history.push('/')
+    } catch (error) {
+      dispatch(advertsLoadFail(error))
+    }
+  }
+}
+export function getAdvertById(id) {
+  return async function(dispatch, getState, {API}){
+    try {
+      const advert = await API.advertsService.getAdvert(id)
+      dispatch(advertGetById(advert))
+    } catch (error) {
+      dispatch(advertsLoadFail(error))
+    }
+  }
+}
 
-export function advertsLoad() {
+export function loadAvderts() {
   return async function (dispatch, getState, { API }) {
     dispatch(advertsLoadRequest())
     try {

@@ -1,39 +1,41 @@
-import React from 'react';
-import { Redirect, useParams, useHistory } from 'react-router-dom';
+import { useEffect } from 'react'
+import { Redirect, useParams, useHistory } from 'react-router-dom'
 
-import Layout from '../../layout';
-import AdvertDetail from './AdvertDetail';
-import { getAdvert, deleteAdvert } from '../service';
-import useQuery from '../../../hooks/useQuery';
-import useMutation from '../../../hooks/useMutation';
+import Layout from '../../layout'
+import AdvertDetail from './AdvertDetail'
+
+import { useSelector, useDispatch } from 'react-redux'
+import { getUIState, getSingleAdvert } from '../../../store/selectors'
+import { getAdvertById, deleteAdvert } from '../../../store/actions'
 
 function AdvertPage() {
-  const { advertId } = useParams();
-  const history = useHistory();
-  const getAdvertById = React.useCallback(
-    () => getAdvert(advertId),
-    [advertId],
-  );
-  const { isLoading, error, data: advert } = useQuery(getAdvertById);
-  const mutation = useMutation(deleteAdvert);
+  const dispatch = useDispatch()
+  const { advertId } = useParams()
+  const { error } = useSelector(getUIState)
+  const advert = useSelector(getSingleAdvert)
+  const history = useHistory()
+
+  useEffect(() => {
+    dispatch(getAdvertById(advertId))
+  }, [dispatch, advertId])
 
   const handleDelete = () => {
-    mutation.execute(advertId).then(() => history.push('/'));
-  };
+    dispatch(deleteAdvert(advertId, history))
+  }
 
-  if (error?.statusCode === 401 || mutation.error?.statusCode === 401) {
-    return <Redirect to="/login" />;
+  if (error?.statusCode === 401) {
+    return <Redirect to="/login" />
   }
 
   if (error?.statusCode === 404) {
-    return <Redirect to="/404" />;
+    return <Redirect to="/404" />
   }
 
   return (
     <Layout>
       {advert && <AdvertDetail {...advert} onDelete={handleDelete} />}
     </Layout>
-  );
+  )
 }
 
-export default AdvertPage;
+export default AdvertPage

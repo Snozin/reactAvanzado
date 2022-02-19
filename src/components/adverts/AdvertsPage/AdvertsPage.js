@@ -9,7 +9,7 @@ import EmptyList from './EmptyList'
 import storage from '../../../utils/storage'
 import { defaultFilters, filterAdverts } from './filters'
 import { useSelector, useDispatch } from 'react-redux'
-import { advertsLoad } from '../../../store/actions'
+import { loadAvderts } from '../../../store/actions'
 import { getAdverts, getUIState } from '../../../store/selectors'
 
 const getFilters = () => storage.get('filters') || defaultFilters
@@ -18,10 +18,10 @@ const saveFilters = (filters) => storage.set('filters', filters)
 function AdvertsPage() {
   const dispatch = useDispatch()
   const adverts = useSelector(getAdverts)
-  const error = useSelector(getUIState)
+  const {error} = useSelector(getUIState)
 
   useEffect(() => {
-    dispatch(advertsLoad())
+    dispatch(loadAvderts())
   }, [dispatch])
 
   const [filters, setFilters] = useState(getFilters)

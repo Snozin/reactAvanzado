@@ -10,6 +10,8 @@ import {
   UI_RESET_ERROR,
   ADS_GET_TAGS,
   AD_CREATE_SUCCESS,
+  AD_DELETE_SUCCESS,
+  AD_GET_BY_ID,
 } from './types'
 
 // TODO Eliminar comentarios y limpiar
@@ -20,8 +22,13 @@ const defaultState = {
   adverts: {
     data: [],
     tags: [],
-    newAd: {
-      id: 0,
+    // newAdId: '',
+    // adDeleted: false,
+    getById: {
+      name:'',
+      sale: true,
+      price: 0,
+      tags: []
     },
   },
   ui: {
@@ -79,7 +86,13 @@ export function adverts(state = defaultState.adverts, action) {
     case ADS_GET_TAGS:
       return { ...state, tags: action.payload }
     case AD_CREATE_SUCCESS:
-      return { ...state, newAd: { id: action.payload } }
+      // return { ...state, newAdId: action.payload } }
+      return state
+    case AD_DELETE_SUCCESS:
+      // return { ...state, adDeleted: true }
+      return state
+    case AD_GET_BY_ID:
+      return { ...state, getById: action.payload }
     default:
       return state
   }
