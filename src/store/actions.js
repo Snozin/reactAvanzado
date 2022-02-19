@@ -78,19 +78,28 @@ export function advertsLoadFail(error) {
     payload: error,
   }
 }
-
-function advertsGetTags(data) {
+export function advertsGetTags(data) {
   return {
     type: ADS_GET_TAGS,
     payload: data,
   }
 }
-
 export function getTags() {
   return async function (dispatch, getState, { API }) {
     try {
       const tags = await API.advertsService.getTags()
       dispatch(advertsGetTags(tags))
+    } catch (error) {
+      dispatch(advertsLoadFail(error))
+    }
+  }
+}
+export function loadAvderts() {
+  return async function (dispatch, getState, { API }) {
+    dispatch(advertsLoadRequest())
+    try {
+      const ads = await API.advertsService.getAdverts()
+      dispatch(advertsLoadSuccess(ads))
     } catch (error) {
       dispatch(advertsLoadFail(error))
     }
@@ -141,18 +150,6 @@ export function getAdvertById(id) {
     try {
       const advert = await API.advertsService.getAdvert(id)
       dispatch(advertGetById(advert))
-    } catch (error) {
-      dispatch(advertsLoadFail(error))
-    }
-  }
-}
-
-export function loadAvderts() {
-  return async function (dispatch, getState, { API }) {
-    dispatch(advertsLoadRequest())
-    try {
-      const ads = await API.advertsService.getAdverts()
-      dispatch(advertsLoadSuccess(ads))
     } catch (error) {
       dispatch(advertsLoadFail(error))
     }

@@ -1,4 +1,3 @@
-// import { combineReducers } from 'redux'
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
@@ -14,21 +13,16 @@ import {
   AD_GET_BY_ID,
 } from './types'
 
-// TODO Eliminar comentarios y limpiar
-
-// Estado inicial por defecto
 const defaultState = {
   userAuth: false,
   adverts: {
     data: [],
     tags: [],
-    // newAdId: '',
-    // adDeleted: false,
     getById: {
-      name:'',
+      name: '',
       sale: true,
       price: 0,
-      tags: []
+      tags: [],
     },
   },
   ui: {
@@ -37,33 +31,7 @@ const defaultState = {
   },
 }
 
-/**
- * Ejemplo inicial con un reducer único
- */
-// export const reducer = (state = defaultState, action) => {
-//   switch (action.type) {
-//     case USER_LOGIN:
-//       return { ...state, userAuth: true }
-
-//     case USER_LOGOUT:
-//       return { ...state, userAuth: false }
-
-//     case ADS_LOADED:
-//       return { ...state, adverts: action.payload }
-
-//     default:
-//       return state
-//   }
-// }
-
-/**
- * Reducers parciales que se combinan al final en un reducer único
- */
-
 export function userAuth(state = defaultState.userAuth, action) {
-  // Retornara un estado nuevo con la misma forma que el estado por defecto AUTH
-  // Dentro de este mini reducer el estado que se recibe es solo el valor de la
-  // propiedad userAuth del estado global.
   switch (action.type) {
     case USER_LOGIN_SUCCESS:
       return true
@@ -77,7 +45,6 @@ export function userAuth(state = defaultState.userAuth, action) {
 }
 
 export function adverts(state = defaultState.adverts, action) {
-  // Retornara un estado nuevo con la misma forma que el estado por defecto ADS
   switch (action.type) {
     case ADS_LOAD_SUCCESS:
       return { ...state, data: action.payload }
@@ -86,10 +53,8 @@ export function adverts(state = defaultState.adverts, action) {
     case ADS_GET_TAGS:
       return { ...state, tags: action.payload }
     case AD_CREATE_SUCCESS:
-      // return { ...state, newAdId: action.payload } }
       return state
     case AD_DELETE_SUCCESS:
-      // return { ...state, adDeleted: true }
       return state
     case AD_GET_BY_ID:
       return { ...state, getById: action.payload }
@@ -118,27 +83,3 @@ export function ui(state = defaultState.ui, action) {
       return state
   }
 }
-
-/**
- * Ejemplo con reducer partiendo el reducer en partes
- *
- * Deberá recibir los mismos parámetros que el reducer inical y devolverá
- * un objeto con la misma estructura que el reducer inicial
- */
-// Esta es la forma manual. Solo para ilustrarlo
-// const combinedReducer = (state = defaultState, action) => {
-//   return {
-//     userAuth: authReducer(state.userAuth, action),
-//     adverts: advertsReducer(state.adverts, action),
-//   }
-// }
-
-/**
- * El combineReducers de redux recibe un objeto con la forma de nuestro estado.
- * Nosotros asignaremos los nombres de las claves y los valores serán los reducers
- * independientes que nos hemos creado.
- */
-// const combineReducerRedux = combineReducers({
-//   userAuth: authReducer,
-//   adverts: advertsReducer
-// })

@@ -6,7 +6,6 @@ export const USER_LOGOUT = 'USER_LOGOUT'
 export const ADS_LOAD_REQUEST = 'ADS_LOAD_REQUEST'
 export const ADS_LOAD_SUCCESS = 'ADS_LOAD_SUCCESS'
 export const ADS_LOAD_FAIL = 'ADS_LOAD_FAIL'
-
 export const ADS_GET_TAGS = 'ADS_GET_TAGS'
 
 export const AD_CREATE_SUCCESS = 'AD_CREATE_SUCCESS'
