@@ -13,7 +13,7 @@ import {
   AD_GET_BY_ID,
 } from './types'
 
-const defaultState = {
+export const defaultState = {
   userAuth: false,
   adverts: {
     data: [],
