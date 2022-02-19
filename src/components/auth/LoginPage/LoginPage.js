@@ -3,7 +3,7 @@ import T from 'prop-types'
 
 import LoginForm from './LoginForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { userLogin } from '../../../store/actions'
+import { UIResetError, userLogin } from '../../../store/actions'
 import { getUIState } from '../../../store/selectors'
 
 function LoginPage({ location, history }) {
@@ -14,11 +14,17 @@ function LoginPage({ location, history }) {
     dispatch(userLogin(credentials, history, location))
   }
 
+  const resetError = () => dispatch(UIResetError())
+
   return (
     <div>
       <LoginForm onSubmit={handleSubmit} />
       {isLoading && <p>...login in nodepop</p>}
-      {error && <div style={{ color: 'red' }}>{error.message}</div>}
+      {error && (
+        <div onClick={resetError} style={{ color: 'red' }}>
+          {error.message}
+        </div>
+      )}
     </div>
   )
 }

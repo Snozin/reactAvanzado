@@ -1,10 +1,13 @@
 // import { combineReducers } from 'redux'
 import {
-  ADS_LOADED,
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_REQUEST,
   USER_LOGOUT,
+  ADS_LOAD_SUCCESS,
+  ADS_LOAD_REQUEST,
+  ADS_LOAD_FAIL,
+  UI_RESET_ERROR,
 } from './types'
 
 // TODO Eliminar comentarios y limpiar
@@ -61,8 +64,10 @@ export function userAuth(state = defaultState.userAuth, action) {
 export function adverts(state = defaultState.adverts, action) {
   // Retornara un estado nuevo con la misma forma que el estado por defecto ADS
   switch (action.type) {
-    case ADS_LOADED:
+    case ADS_LOAD_SUCCESS:
       return action.payload
+    // case ADS_LOAD_FAIL:
+    //   return action.payload
     default:
       return state
   }
@@ -76,6 +81,14 @@ export function ui(state = defaultState.ui, action) {
       return { isLoading: false, error: null }
     case USER_LOGIN_FAIL:
       return { isLoading: false, error: action.payload }
+    case ADS_LOAD_REQUEST:
+      return { isLoading: true, error: null }
+    case ADS_LOAD_SUCCESS:
+      return { isLoading: false, error: null }
+    case ADS_LOAD_FAIL:
+      return { isLoading: false, error: action.payload }
+    case UI_RESET_ERROR:
+      return { ...state, error: null }
     default:
       return state
   }

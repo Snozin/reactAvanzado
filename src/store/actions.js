@@ -3,7 +3,10 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-  ADS_LOADED,
+  ADS_LOAD_SUCCESS,
+  ADS_LOAD_REQUEST,
+  ADS_LOAD_FAIL,
+  UI_RESET_ERROR
 } from './types'
 
 export function userLoginRequest() {
@@ -44,9 +47,39 @@ export function userLogout() {
   }
 }
 
-export function adsLoaded(ads) {
+export function advertsLoadRequest() {
   return {
-    type: ADS_LOADED,
-    payload: ads,
+    type: ADS_LOAD_REQUEST,
+  }
+}
+export function advertsLoadSuccess(data) {
+  return {
+    type: ADS_LOAD_SUCCESS,
+    payload: data,
+  }
+}
+export function advertsLoadFail(error) {
+  return {
+    type: ADS_LOAD_FAIL,
+    error: true,
+    payload: error,
+  }
+}
+
+export function advertsLoad() {
+  return async function (dispatch, getState, { API }) {
+    dispatch(advertsLoadRequest())
+    try {
+      const ads = await API.advertsService.getAdverts()
+      dispatch(advertsLoadSuccess(ads))
+    } catch (error) {
+      dispatch(advertsLoadFail(error))
+    }
+  }
+}
+
+export function UIResetError() {
+  return {
+    type: UI_RESET_ERROR
   }
 }

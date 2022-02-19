@@ -3,11 +3,12 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import * as reducers from './reducers'
 import * as authService from '../components/auth/service'
+import * as advertsService from '../components/adverts/service'
 
 // TODO implementar el servicio de pillar anuncioos del api
 const API = {
   authService,
-  // adverts
+  advertsService
 }
 
 const mainReducer = combineReducers(reducers)
@@ -40,17 +41,16 @@ function logger(store) {
 const generateStore = (preloadState) => {
   // preloadState es un objeto que tiene la forma inicial que queremos darle
   // al estado, solo si lo necesitamos. Es un parámetro opcional
+  const middlewares = [
+    thunk.withExtraArgument({
+      API,
+    }),
+    logger,
+  ]
   const store = createStore(
     mainReducer,
     preloadState,
-    composeWithDevTools(
-      applyMiddleware(
-        thunk.withExtraArgument({
-          API,
-        }),
-        logger
-      )
-    )
+    composeWithDevTools(applyMiddleware(...middlewares))
   )
   return store
 }
