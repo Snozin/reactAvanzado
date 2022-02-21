@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, fireEvent } from '@testing-library/react'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux'
 import * as actions from '../../../store/actions'
 // import generateStore from '../../../store'
 
